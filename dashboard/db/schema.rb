@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503213959) do
+ActiveRecord::Schema.define(version: 20170509090000) do
 
   create_table "activities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer  "user_id"
@@ -143,6 +143,14 @@ ActiveRecord::Schema.define(version: 20170503213959) do
     t.text     "contained_level_text",     limit: 65535
     t.index ["contained_level_id"], name: "index_contained_levels_on_contained_level_id", using: :btree
     t.index ["level_group_level_id"], name: "index_contained_levels_on_level_group_level_id", using: :btree
+  end
+
+  create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string   "name"
+    t.text     "properties", limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["name"], name: "index_courses_on_name", using: :btree
   end
 
   create_table "districts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -291,6 +299,7 @@ ActiveRecord::Schema.define(version: 20170503213959) do
     t.string   "md5"
     t.boolean  "published",                              default: false, null: false
     t.text     "notes",                    limit: 65535
+    t.text     "audit_log",                limit: 65535
     t.index ["game_id"], name: "index_levels_on_game_id", using: :btree
     t.index ["name"], name: "index_levels_on_name", using: :btree
   end
@@ -488,7 +497,6 @@ ActiveRecord::Schema.define(version: 20170503213959) do
   end
 
   create_table "pd_workshops", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "workshop_type",                     null: false
     t.integer  "organizer_id",                      null: false
     t.string   "location_name"
     t.string   "location_address"
@@ -550,9 +558,10 @@ ActiveRecord::Schema.define(version: 20170503213959) do
   end
 
   create_table "plc_courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "course_id"
+    t.index ["course_id"], name: "fk_rails_d5fc777f73", using: :btree
   end
 
   create_table "plc_enrollment_module_assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -801,14 +810,14 @@ ActiveRecord::Schema.define(version: 20170503213959) do
   end
 
   create_table "stages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name",              null: false
+    t.string   "name",                              null: false
     t.integer  "absolute_position"
-    t.integer  "script_id",         null: false
+    t.integer  "script_id",                         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "flex_category"
-    t.boolean  "lockable"
-    t.integer  "relative_position", null: false
+    t.boolean  "lockable",          default: false, null: false
+    t.integer  "relative_position",                 null: false
     t.index ["script_id"], name: "index_stages_on_script_id", using: :btree
   end
 
@@ -1104,6 +1113,7 @@ ActiveRecord::Schema.define(version: 20170503213959) do
   add_foreign_key "peer_reviews", "users", column: "reviewer_id"
   add_foreign_key "peer_reviews", "users", column: "submitter_id"
   add_foreign_key "plc_course_units", "scripts"
+  add_foreign_key "plc_courses", "courses"
   add_foreign_key "plc_learning_modules", "stages"
   add_foreign_key "plc_tasks", "script_levels"
   add_foreign_key "school_infos", "school_districts"
