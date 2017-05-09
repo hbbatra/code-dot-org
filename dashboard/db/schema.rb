@@ -145,6 +145,14 @@ ActiveRecord::Schema.define(version: 20170509090000) do
     t.index ["level_group_level_id"], name: "index_contained_levels_on_level_group_level_id", using: :btree
   end
 
+  create_table "course_scripts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "course_id", null: false
+    t.integer "script_id", null: false
+    t.integer "position",  null: false
+    t.index ["course_id"], name: "index_course_scripts_on_course_id", using: :btree
+    t.index ["script_id"], name: "index_course_scripts_on_script_id", using: :btree
+  end
+
   create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
     t.text     "properties", limit: 65535
