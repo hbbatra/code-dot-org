@@ -3,7 +3,7 @@ import AnnouncementsCollapsible from './AnnouncementsCollapsible';
 import RecentCoursesCollapsible from './RecentCoursesCollapsible';
 import ManageSectionsCollapsible from './ManageSectionsCollapsible';
 import CollapsibleSection from './CollapsibleSection';
-import GradientNavCard from './GradientNavCard';
+import ResourceCard from './ResourceCard';
 import i18n from "@cdo/locale";
 
 const TeacherHomepage = React.createClass({
@@ -25,28 +25,28 @@ const TeacherHomepage = React.createClass({
         <ManageSectionsCollapsible sections={sections}/>
 
         <CollapsibleSection header={i18n.resources()}>
-          <GradientNavCard
+          <ResourceCard
             title={i18n.teacherCommunity()}
             description={i18n.teacherCommunityDescription()}
             image="../../static/navcard-placeholder.png"
             buttonText={i18n.joinCommunity()}
             link="https://forum.code.org"
           />
-          <GradientNavCard
+          <ResourceCard
             title={i18n.professionalLearning()}
             description={i18n.professionalLearningDescription()}
             image="../../static/navcard-placeholder.png"
             buttonText={i18n.learnMore()}
             link="/my-professional-learning"
           />
-          <GradientNavCard
+          <ResourceCard
             title={i18n.standardsAndFramework()}
             description={i18n.standardsAndFrameworkDescription()}
             image="../../static/navcard-placeholder.png"
             buttonText={i18n.reviewDocuments()}
             link="https://code.org/teacher-dashboard#/plan"
           />
-          <GradientNavCard
+          <ResourceCard
             title={i18n.findGuestSpeaker()}
             description={i18n.findGuestSpeakerDescription()}
             image="../../static/navcard-placeholder.png"
