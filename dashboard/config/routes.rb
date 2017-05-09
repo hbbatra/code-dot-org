@@ -154,6 +154,7 @@ Dashboard::Application.routes.draw do
 
     # /s/xxx/stage/yyy/puzzle/zzz
     resources :stages, only: [], path: "/stage", param: 'position', format: false do
+      get 'extras', to: 'script_levels#stage_extras', format: false
       get 'summary_for_lesson_plans', to: 'script_levels#summary_for_lesson_plans', format: false
       resources :script_levels, only: [:show], path: "/puzzle", format: false do
         member do
@@ -424,6 +425,8 @@ Dashboard::Application.routes.draw do
       get 'school-districts/:state', to: 'school_districts#index', defaults: {format: 'json'}
       get 'schools/:school_district_id/:school_type', to: 'schools#index', defaults: {format: 'json'}
       get 'regional-partners/:school_district_id/:course', to: 'regional_partners#index', defaults: {format: 'json'}
+
+      get 'projects/gallery/public/:project_type/:limit(/:offset)', to: 'projects/public_gallery#index', defaults: {format: 'json'}
 
       # Routes used by UI test status pages
       get 'test_logs/*prefix/since/:time', to: 'test_logs#get_logs_since', defaults: {format: 'json'}
